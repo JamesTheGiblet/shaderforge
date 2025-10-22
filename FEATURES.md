@@ -30,26 +30,6 @@ Each evolved shader has genetic traits:
 - **Symmetry**: None, X-axis, Y-axis, Both, Radial
 - **Blend Mode**: Add, Multiply, Mix
 
-### 🎭 **Preset Library**
-
-20+ professional shaders included:
-
-- 🌈 **Rainbow**: Animated color gradients
-- 🌊 **Plasma**: Organic flowing patterns
-- 🔢 **Mandelbrot**: Classic fractal zoom
-- 🌀 **Tunnel**: Hypnotic 3D tunnel effect
-- 🎯 **Voronoi**: Cellular patterns
-- 🌊 **Waves**: Sine wave animations
-- ⚡ **Electric**: Lightning effects
-- 🔥 **Fire**: Realistic flame simulation
-- 🌌 **Galaxy**: Swirling space nebula
-- 💎 **Crystal**: Geometric patterns
-- 🌀 **Spiral**: Mathematical spirals
-- 🎆 **Particles**: Particle systems
-- 🌈 **Chromatic**: Color aberration
-- 🔮 **Orbs**: Floating spheres
-- ⭐ **Stars**: Starfield parallax
-
 ### 🎛️ **Real-Time Controls**
 
 - **Mouse Position**: Interactive shader parameters (u_mouse)

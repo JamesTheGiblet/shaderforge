@@ -677,9 +677,9 @@
                 
                 // Canvas & WebGL
                 this.canvas = document.getElementById('canvas');
-                this.gl = this.canvas.getContext('webgl2') || 
-                          this.canvas.getContext('webgl') ||
-                          this.canvas.getContext('experimental-webgl');
+                this.gl = this.canvas.getContext('webgl2', { preserveDrawingBuffer: true }) || 
+                          this.canvas.getContext('webgl', { preserveDrawingBuffer: true }) ||
+                          this.canvas.getContext('experimental-webgl', { preserveDrawingBuffer: true });
                 
                 if (!this.gl) {
                     alert('WebGL not supported! Please use a modern browser.');
@@ -781,7 +781,7 @@
                 if (this.decodeGenesFromURL()) {
                     console.log('✅ Shader loaded from URL parameters.');
                 } else {
-                this.loadDefaultShader();
+                    this.loadDefaultShader();
                 }
                 this.updateLibraryDisplay();
                 this.render();
@@ -891,6 +891,9 @@
                         }
                         this.showNotification('✅ Shader compiled successfully!');
                         return true;
+                    } else {
+                        this.showNotification('❌ Compilation failed!', true);
+                        return false;
                     }
                 } catch (error) {
                     this.showError(error.message);
@@ -1258,6 +1261,97 @@ void main() {
             }
             
             // =====================================================================
+            // GENE UI
+            // =====================================================================
+
+            updateGeneUI() {
+                if (!this.currentGenome || !this.currentGenome.genes || !this.geneControlsContainer) return;
+
+                this.geneControlsContainer.innerHTML = ''; // Clear old controls
+
+                for (const key in this.currentGenome.genes) {
+                    if (!ShaderForge.GENE_RANGES[key]) continue;
+
+                    const gene = this.currentGenome.genes[key];
+                    const range = ShaderForge.GENE_RANGES[key];
+
+                    if (range.type === 'float') {
+                        this.createSlider(key, gene, range);
+                    } else if (range.type === 'int') {
+                        this.createSelect(key, gene, range);
+                    } else if (range.type === 'vec3') {
+                        const components = ['R', 'G', 'B'];
+                        gene.forEach((componentValue, i) => {
+                            this.createSlider(key, componentValue, range, i, components[i]);
+                        });
+                    }
+                }
+            }
+
+            createSlider(key, value, range, index = -1, componentLabel = '') {
+                const label = document.createElement('div');
+                label.className = 'gene-label';
+                label.textContent = `${key.replace(/([A-Z])/g, ' $1')} ${componentLabel}`.trim();
+                this.geneControlsContainer.appendChild(label);
+
+                const slider = document.createElement('input');
+                slider.type = 'range';
+                slider.min = range.min;
+                slider.max = range.max;
+                slider.step = (range.max - range.min) / 100;
+                slider.value = value;
+
+                const valueDisplay = document.createElement('div');
+                valueDisplay.className = 'gene-value';
+                valueDisplay.textContent = parseFloat(value).toFixed(2);
+
+                slider.addEventListener('input', (e) => {
+                    const val = parseFloat(e.target.value);
+                    if (index > -1) {
+                        this.currentGenome.genes[key][index] = val;
+                    } else {
+                        this.currentGenome.genes[key] = val;
+                    }
+                    valueDisplay.textContent = val.toFixed(2);
+                });
+
+                this.geneControlsContainer.appendChild(slider);
+                this.geneControlsContainer.appendChild(valueDisplay);
+            }
+
+            createSelect(key, value, range) {
+                const label = document.createElement('div');
+                label.className = 'gene-label';
+                label.textContent = key.replace(/([A-Z])/g, ' $1');
+                this.geneControlsContainer.appendChild(label);
+
+                const optionMap = {
+                    symmetry: ['None', 'X-Axis', 'Y-Axis', 'Both', 'Radial'],
+                    blendMode: ['Normal', 'Multiply', 'Add']
+                };
+
+                const select = document.createElement('select');
+                for (let i = range.min; i <= range.max; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    if (optionMap[key] && optionMap[key][i]) {
+                        option.textContent = optionMap[key][i];
+                    } else {
+                        option.textContent = i;
+                    }
+                    select.appendChild(option);
+                }
+                select.value = value;
+
+                select.addEventListener('change', (e) => {
+                    this.currentGenome.genes[key] = parseInt(e.target.value, 10);
+                });
+
+                this.geneControlsContainer.appendChild(select);
+                this.geneControlsContainer.appendChild(document.createElement('div')); // Placeholder
+            }
+
+            // =====================================================================
             // EVENT LISTENERS
             // =====================================================================
             
@@ -1325,6 +1419,41 @@ void main() {
                         this.confirmSave();
                     }
                 });
+
+                // Global keyboard shortcuts
+                window.addEventListener('keydown', (e) => {
+                    // Ignore shortcuts if user is typing in an input field
+                    const activeEl = document.activeElement;
+                    if (activeEl && (activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'INPUT')) {
+                        return;
+                    }
+
+                    // Use a map for clean key-to-action mapping
+                    const keyActionMap = {
+                        'l': () => !this.likeBtn.disabled && this.likeBtn.click(),
+                        'k': () => !this.skipBtn.disabled && this.skipBtn.click(),
+                        'e': () => this.isEvolving ? this.evolveStopBtn.click() : this.evolveStartBtn.click(),
+                        'r': () => this.randomBtn.click(),
+                        's': () => this.saveBtn.click(),
+                        'c': () => this.exportBtn.click()
+                    };
+
+                    const action = keyActionMap[e.key.toLowerCase()];
+                    if (action) {
+                        e.preventDefault(); // Prevent default browser actions (like 's' for save page)
+                        action();
+                    }
+                });
+
+                // Add a visual hint for shortcuts in the UI
+                this.likeBtn.title = "Shortcut: L";
+                this.skipBtn.title = "Shortcut: K";
+                this.evolveStartBtn.title = "Shortcut: E";
+                this.evolveStopBtn.title = "Shortcut: E";
+                this.randomBtn.title = "Shortcut: R";
+                this.saveBtn.title = "Shortcut: S";
+                this.exportBtn.title = "Shortcut: C";
+
             }
             
             // =====================================================================
@@ -1728,7 +1857,7 @@ void main() {
                         link.click();
                         URL.revokeObjectURL(url);
                         
-                        this.showNotification('📸 Screenshot saved!');
+                        this.showNotification('📸 Screenshot saved to your Downloads folder!');
                     });
                 } catch (err) {
                     console.error('Screenshot failed:', err);
@@ -1753,11 +1882,26 @@ void main() {
                 const stream = this.canvas.captureStream(60); // 60 fps
                 this.recordedChunks = [];
                 
+                const options = { mimeType: 'video/webm; codecs=vp9' };
+                const supportedMimeTypes = [
+                    'video/webm; codecs=vp9',
+                    'video/webm; codecs=vp8',
+                    'video/webm; codecs=h264',
+                    'video/webm'
+                ];
+
+                const supportedType = supportedMimeTypes.find(type => MediaRecorder.isTypeSupported(type));
+
+                if (!supportedType) {
+                    this.showNotification('Video recording format not supported on this browser.', true);
+                    return;
+                }
+
                 try {
-                    this.mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp9' });
+                    this.mediaRecorder = new MediaRecorder(stream, { mimeType: supportedType });
                 } catch (e) {
                     console.error('MediaRecorder error:', e);
-                    this.showNotification('Failed to create MediaRecorder. Try another codec.', true);
+                    this.showNotification('Failed to create MediaRecorder.', true);
                     return;
                 }
 
