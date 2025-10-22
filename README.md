@@ -13,6 +13,7 @@ ShaderForge is an interactive WebGL shader playground that combines real-time vi
 ## ✨ Features
 
 ### 🎬 **Real-Time Shader Editor**
+
 - **Live GLSL Compilation**: See changes instantly as you type
 - **Syntax Highlighting**: Code editor optimized for GLSL
 - **Error Display**: Clear compilation error messages
@@ -20,6 +21,7 @@ ShaderForge is an interactive WebGL shader playground that combines real-time vi
 - **Line Numbers**: Easy code navigation
 
 ### 🧬 **Genetic Algorithm Evolution**
+
 - **20-Shader Population**: Evolve visual effects through natural selection
 - **Like/Skip System**: Guide evolution with user feedback
 - **Tournament Selection**: Best shaders survive and reproduce
@@ -28,7 +30,9 @@ ShaderForge is an interactive WebGL shader playground that combines real-time vi
 - **Generation Tracking**: Watch evolution progress over time
 
 ### 🎨 **Shader DNA**
+
 Each evolved shader has genetic traits:
+
 - **Color Speed**: Animation rate of color cycling
 - **Color Shift**: RGB phase offsets for hue variation
 - **Time Scale**: Overall animation speed multiplier
@@ -39,7 +43,9 @@ Each evolved shader has genetic traits:
 - **Blend Mode**: Add, Multiply, Mix
 
 ### 🎭 **Preset Library**
+
 20+ professional shaders included:
+
 - 🌈 **Rainbow**: Animated color gradients
 - 🌊 **Plasma**: Organic flowing patterns
 - 🔢 **Mandelbrot**: Classic fractal zoom
@@ -57,6 +63,7 @@ Each evolved shader has genetic traits:
 - ⭐ **Stars**: Starfield parallax
 
 ### 🎛️ **Real-Time Controls**
+
 - **Mouse Position**: Interactive shader parameters (u_mouse)
 - **Time Uniform**: Automatic animation (u_time)
 - **Resolution**: Responsive to window size (u_resolution)
@@ -65,6 +72,7 @@ Each evolved shader has genetic traits:
 - **Playback Speed**: Control animation rate
 
 ### 💾 **Save & Export**
+
 - **Favorite Shaders**: Save evolved shaders to local library
 - **Export Code**: Copy GLSL to clipboard
 - **Screenshot**: Capture current frame as PNG
@@ -72,6 +80,7 @@ Each evolved shader has genetic traits:
 - **Share URL**: Share shaders via link (planned)
 
 ### 🖼️ **Visualization**
+
 - **Fullscreen Canvas**: Immersive shader display
 - **Dual View**: Editor + preview side-by-side
 - **Thumbnail Gallery**: Preview saved shaders
@@ -82,6 +91,7 @@ Each evolved shader has genetic traits:
 ## 🚀 Quick Start
 
 ### **Option 1: Run Locally**
+
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/shaderforge.git
@@ -95,9 +105,11 @@ python -m http.server 8000
 ```
 
 ### **Option 2: Online**
+
 Simply open `shaderforge.html` in any modern browser - no installation required!
 
 **Browser Requirements:**
+
 - Chrome 90+ ✅
 - Firefox 88+ ✅
 - Safari 14+ ✅
@@ -143,6 +155,7 @@ Simply open `shaderforge.html` in any modern browser - no installation required!
 ### **Advanced Techniques**
 
 #### **Manual Shader Writing**
+
 ```glsl
 precision mediump float;
 uniform vec2 u_resolution;
@@ -166,12 +179,14 @@ void main() {
 ```
 
 #### **Using Built-in Uniforms**
+
 - `u_time` - Seconds since start (float)
 - `u_resolution` - Canvas width/height (vec2)
 - `u_mouse` - Mouse X/Y position (vec2)
 - `u_frame` - Frame counter (int, optional)
 
 #### **Directed Evolution**
+
 ```
 1. Start with preset you like (e.g., "plasma")
 2. Click "Evolve From Current"
@@ -182,6 +197,7 @@ void main() {
 ```
 
 #### **Creating Complex Effects**
+
 ```glsl
 // Combine multiple techniques:
 
@@ -221,6 +237,7 @@ void main() {
 ### **Basic Concepts**
 
 **Data Types:**
+
 ```glsl
 float x = 1.0;           // Single number
 vec2 pos = vec2(0.5, 0.5); // 2D vector
@@ -229,6 +246,7 @@ vec4 rgba = vec4(1.0, 0.0, 0.0, 1.0); // RGBA
 ```
 
 **Built-in Functions:**
+
 ```glsl
 sin(x), cos(x), tan(x)   // Trigonometry
 abs(x), sign(x)          // Math
@@ -240,6 +258,7 @@ floor(x), ceil(x)       // Rounding
 ```
 
 **Vector Operations:**
+
 ```glsl
 vec2 a = vec2(1.0, 2.0);
 vec2 b = vec2(3.0, 4.0);
@@ -252,6 +271,7 @@ float dot = dot(a, b);   // 11.0
 ### **Common Patterns**
 
 **1. Gradient:**
+
 ```glsl
 vec2 st = gl_FragCoord.xy / u_resolution;
 vec3 color = vec3(st.x, st.y, 0.5);
@@ -259,6 +279,7 @@ gl_FragColor = vec4(color, 1.0);
 ```
 
 **2. Circle:**
+
 ```glsl
 vec2 st = gl_FragCoord.xy / u_resolution;
 vec2 center = vec2(0.5);
@@ -268,6 +289,7 @@ gl_FragColor = vec4(vec3(circle), 1.0);
 ```
 
 **3. Animation:**
+
 ```glsl
 vec2 st = gl_FragCoord.xy / u_resolution;
 float wave = sin(st.x * 10.0 + u_time * 2.0);
@@ -276,6 +298,7 @@ gl_FragColor = vec4(color, 1.0);
 ```
 
 **4. Noise:**
+
 ```glsl
 float random(vec2 st) {
     return fract(sin(dot(st, vec2(12.9898, 78.233))) * 43758.5453);
@@ -388,30 +411,35 @@ void main() {
 ## 🎯 Use Cases
 
 ### **Creative Coding**
+
 - Learn WebGL and GLSL
 - Experiment with visual effects
 - Create generative art
 - Build shader libraries
 
 ### **Game Development**
+
 - Prototype visual effects
 - Generate procedural textures
 - Create UI animations
 - Test shader performance
 
 ### **Visual Music**
+
 - Audio-reactive shaders (coming soon)
 - VJ performance tools
 - Music visualizers
 - Live coding performances
 
 ### **Education**
+
 - Teach genetic algorithms
 - Demonstrate WebGL programming
 - Explore evolutionary computation
 - Interactive GLSL tutorials
 
 ### **Art & Design**
+
 - Generate abstract art
 - Create video backgrounds
 - Design motion graphics
@@ -424,13 +452,15 @@ void main() {
 ### **Shader Won't Compile**
 
 **Problem**: Red error message appears
-**Solution**: 
+**Solution**:
+
 - Check for syntax errors (missing semicolons)
 - Ensure all variables are declared
 - Use correct GLSL precision (mediump float)
 - Verify uniform names match (u_time, u_resolution)
 
 **Common Errors:**
+
 ```glsl
 // ❌ Wrong
 vec2 st = gl_FragCoord.xy / u_resolution
@@ -445,6 +475,7 @@ gl_FragColor = vec4(color, 1.0); // Need semicolon
 
 **Problem**: Canvas shows nothing
 **Solution**:
+
 - Check browser console for WebGL errors
 - Ensure WebGL is supported (chrome://gpu)
 - Try different browser
@@ -454,6 +485,7 @@ gl_FragColor = vec4(color, 1.0); // Need semicolon
 
 **Problem**: Shaders don't change after evolution
 **Solution**:
+
 - Rate at least 10 shaders before evolution
 - Click through entire population (20 shaders)
 - Increase mutation rate
@@ -463,6 +495,7 @@ gl_FragColor = vec4(color, 1.0); // Need semicolon
 
 **Problem**: Low FPS or stuttering
 **Solution**:
+
 - Reduce shader complexity (fewer loops)
 - Lower octave count in evolved shaders
 - Close other GPU-intensive apps
@@ -473,6 +506,7 @@ gl_FragColor = vec4(color, 1.0); // Need semicolon
 
 **Problem**: Save button doesn't work
 **Solution**:
+
 - Check browser localStorage is enabled
 - Not in private/incognito mode
 - Clear browser cache
@@ -485,6 +519,7 @@ gl_FragColor = vec4(color, 1.0); // Need semicolon
 ### **Writing Efficient Shaders**
 
 ✅ **Do:**
+
 - Use `const` for loop bounds when possible
 - Minimize texture lookups
 - Pre-calculate values outside loops
@@ -492,6 +527,7 @@ gl_FragColor = vec4(color, 1.0); // Need semicolon
 - Keep precision as low as acceptable
 
 ❌ **Don't:**
+
 - Use unbounded loops
 - Perform expensive calculations per pixel unnecessarily
 - Create deep conditional nesting
@@ -500,6 +536,7 @@ gl_FragColor = vec4(color, 1.0); // Need semicolon
 ### **Evolution Strategy**
 
 **For Beautiful Results:**
+
 ```
 1. Start with "plasma" or "rainbow"
 2. Use low mutation rate (0.1)
@@ -509,6 +546,7 @@ gl_FragColor = vec4(color, 1.0); // Need semicolon
 ```
 
 **For Wild Experiments:**
+
 ```
 1. Start with "experimental" preset
 2. Use high mutation rate (0.3)
@@ -520,11 +558,13 @@ gl_FragColor = vec4(color, 1.0); // Need semicolon
 ### **Common Patterns**
 
 **Time-based Animation:**
+
 ```glsl
 float t = u_time * 0.5; // Slower animation
 ```
 
 **Mouse Interaction:**
+
 ```glsl
 vec2 mouse = u_mouse / u_resolution;
 float dist = distance(st, mouse);
@@ -532,6 +572,7 @@ color *= 1.0 - smoothstep(0.0, 0.5, dist);
 ```
 
 **Aspect Ratio Correction:**
+
 ```glsl
 vec2 st = gl_FragCoord.xy / u_resolution;
 st.x *= u_resolution.x / u_resolution.y;
@@ -542,17 +583,20 @@ st.x *= u_resolution.x / u_resolution.y;
 ## 📚 Resources
 
 ### **GLSL Learning**
+
 - [The Book of Shaders](https://thebookofshaders.com/) - Interactive GLSL guide
 - [Shadertoy](https://www.shadertoy.com/) - Community shader sharing
 - [GLSL Sandbox](http://glslsandbox.com/) - Simple shader playground
 - [WebGL Fundamentals](https://webglfundamentals.org/) - WebGL tutorial
 
 ### **Inspiration**
+
 - [Inigo Quilez](https://iquilezles.org/) - Shader wizardry
 - [Patricio Gonzalez Vivo](http://patriciogonzalezvivo.com/) - Generative art
 - [Casey Reas](http://reas.com/) - Creative coding
 
 ### **Tools**
+
 - [GLSL Linter](https://github.com/gl-transitions/glsl-transition-validator)
 - [Shader Editor VSCode](https://marketplace.visualstudio.com/items?itemName=slevesque.shader)
 
@@ -561,13 +605,15 @@ st.x *= u_resolution.x / u_resolution.y;
 ## 🗺️ Roadmap
 
 ### **Version 1.1** (Q2 2025)
-- [ ] Audio-reactive shaders (mic/audio input)
-- [ ] Video recording (.webm export)
-- [ ] URL sharing (encode shader in URL)
-- [ ] Texture upload support
-- [ ] 3D raymarch templates
+
+- [x] Audio-reactive shaders (mic/audio input)
+- [x] Video recording (.webm export)
+- [x] URL sharing (encode shader in URL)
+- [x] Texture upload support
+- [x] 3D raymarch templates
 
 ### **Version 1.2** (Q3 2025)
+
 - [ ] Multi-pass rendering
 - [ ] Buffer feedback loops
 - [ ] Shader marketplace/gallery
@@ -575,6 +621,7 @@ st.x *= u_resolution.x / u_resolution.y;
 - [ ] VR/AR shader support
 
 ### **Version 2.0** (Q4 2025)
+
 - [ ] Machine learning fitness (CNN evaluator)
 - [ ] Vertex shader evolution
 - [ ] Compute shader support
@@ -588,6 +635,7 @@ st.x *= u_resolution.x / u_resolution.y;
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ### **Development Setup**
+
 ```bash
 git clone https://github.com/yourusername/shaderforge.git
 cd shaderforge
@@ -596,6 +644,7 @@ cd shaderforge
 ```
 
 ### **Areas for Contribution**
+
 - 🎨 New shader presets
 - 🐛 Bug fixes
 - 📚 Documentation improvements
@@ -633,16 +682,19 @@ SOFTWARE.
 ## 🙏 Acknowledgments
 
 ### **Technologies**
+
 - [WebGL](https://www.khronos.org/webgl/) - 3D graphics API
 - [GLSL](https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language) - Shader language
 
 ### **Inspiration**
+
 - Shadertoy community
 - The Book of Shaders
 - Inigo Quilez's techniques
 - Karl Sims' evolved creatures
 
 ### **Graphics Algorithms**
+
 - Perlin/Simplex noise
 - Voronoi diagrams
 - Mandelbrot sets
@@ -669,6 +721,7 @@ If you find ShaderForge useful, please consider:
 Made with ❤️ using WebGL, GLSL & Genetic Algorithms
 
 **Part of the Evolution Trilogy:**
+
 - 🎨 [Primordial](https://jamesthegiblet.github.io/Primordial/) - Art Evolution
 - 🎵 [MelodyForge](#) - Music Evolution  
 - 🔥 **ShaderForge** - Visual FX Evolution
